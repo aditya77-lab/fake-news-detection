@@ -1,0 +1,12 @@
+{
+  "name": "fakenews-detector",
+  "version": "1.0.0",
+  "description": "Fake News Detection Web Application",
+  "main": "api/index.py",
+  "scripts": {
+    "build": "bash vercel-build.sh"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+} 
