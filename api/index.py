@@ -1,14 +1,48 @@
 from http.server import BaseHTTPRequestHandler
-import subprocess
 import os
 import sys
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'text/html')
         self.end_headers()
-        message = "Streamlit app is running at the ROOT_URL"
+        
+        message = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Fake News Detector</title>
+            <meta http-equiv="refresh" content="0;url=https://breifly.streamlit.app/" />
+            <style>
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    background: #0e1117;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    margin: 0;
+                    padding: 20px;
+                    text-align: center;
+                }
+                h1 { color: #ff4b4b; }
+                p { margin: 10px 0; max-width: 600px; }
+                a { color: #4b8bff; text-decoration: none; }
+                a:hover { text-decoration: underline; }
+            </style>
+        </head>
+        <body>
+            <h1>Fake News Detector</h1>
+            <p>Redirecting to the Streamlit app...</p>
+            <p>If you are not redirected automatically, <a href="https://breifly.streamlit.app/">click here</a>.</p>
+            <p>Note: This app is better hosted on Streamlit Cloud.</p>
+        </body>
+        </html>
+        """
+        
         self.wfile.write(message.encode())
         return
 
@@ -16,26 +50,5 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        self.wfile.write('{"status": "ok"}'.encode())
-        return
-
-def run_streamlit():
-    try:
-        # Add the path to the requirements file
-        subprocess.check_call([
-            sys.executable, "-m", "pip", "install", 
-            "-r", "requirements-vercel.txt"
-        ])
-        
-        # Run the Streamlit app
-        subprocess.check_call([
-            sys.executable, "-m", "streamlit", "run", 
-            "new.py", "--server.port=8501", "--server.headless=true"
-        ])
-    except Exception as e:
-        print(f"Error starting Streamlit: {str(e)}")
-
-# Start Streamlit in a separate process when deployed
-if os.environ.get('VERCEL_ENV') == 'production':
-    import threading
-    threading.Thread(target=run_streamlit).start() 
+        self.wfile.write('{"status": "Please use Streamlit Cloud for this application"}'.encode())
+        return 

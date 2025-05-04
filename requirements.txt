@@ -1,8 +1,8 @@
-streamlit
-google-generativeai
-python-dotenv
-pymongo
-dnspython
+streamlit==1.29.0
+google-generativeai==0.3.1
+python-dotenv==1.0.0
+pymongo==4.5.0
+dnspython==2.4.0
 
 # Use a more compatible version for Windows
 numpy==1.24.3
@@ -10,4 +10,6 @@ pandas==2.0.3
 
 # Optional for production
 gunicorn==21.2.0
+
+protobuf==4.23.4
 

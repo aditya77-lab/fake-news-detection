@@ -1,15 +1,23 @@
 # Deploying to Vercel
 
-This guide explains how to deploy your Fake News Detection application to Vercel.
+This guide explains how to deploy your Fake News Detection application to Vercel. Note that while this will work, Streamlit is best deployed on platforms designed for it, like Streamlit Cloud.
 
-## Prerequisites
+## Important Notice
 
-1. A Vercel account (sign up at [vercel.com](https://vercel.com) if you don't have one)
-2. Git repository with your code (GitHub, GitLab, or Bitbucket)
-3. Your Gemini API key
-4. Your MongoDB connection string
+**Streamlit applications are not ideal for Vercel's serverless architecture.** The current setup creates a simple landing page that redirects to a proper Streamlit deployment.
 
-## Deployment Steps
+## Better Alternative: Streamlit Cloud
+
+For the best experience, deploy this app on [Streamlit Cloud](https://streamlit.io/cloud) instead:
+1. Push your code to GitHub
+2. Sign up for Streamlit Cloud (free tier available)
+3. Connect your repository
+4. Set your secrets (GEMINI_API_KEY, MONGODB_URI)
+5. Deploy
+
+## Vercel Deployment Steps
+
+If you still want to proceed with Vercel deployment:
 
 ### 1. Push your code to GitHub
 
@@ -31,12 +39,13 @@ In the Vercel project settings, add these environment variables:
 
 ### 4. Deploy
 
-1. Leave all other settings as default
-2. Click "Deploy"
+1. Make sure the Build Command is set to `pip install -r requirements-vercel.txt`
+2. Set the Output Directory to `public` (create an empty public directory if needed)
+3. Click "Deploy"
 
 ### 5. Check Deployment Status
 
-Vercel will build and deploy your application. Once complete, you'll get a deployment URL (e.g., `your-app-name.vercel.app`).
+Vercel will build and deploy your application. The deployed page will redirect users to your Streamlit Cloud deployment.
 
 ## Troubleshooting
 
@@ -44,14 +53,15 @@ If your deployment fails:
 
 1. Check the build logs in Vercel to identify the error
 2. Make sure all environment variables are correctly set
-3. Verify that your MongoDB instance allows connections from Vercel's IP addresses
-4. Ensure your Gemini API key is valid and has proper permissions
+3. Try downgrading Python packages in requirements-vercel.txt
+4. Consider using an older Python version in runtime.txt (3.9 is recommended)
+5. If all else fails, deploy directly to Streamlit Cloud instead
 
-## Limitations
+## Making Streamlit Work on Vercel (Advanced)
 
-Note that Streamlit apps on Vercel may have some limitations:
+For a true Streamlit deployment on Vercel:
+1. Create a Docker-based deployment with a custom Dockerfile
+2. Use Vercel's serverless functions to proxy requests to a container
+3. Handle session management and state persistence separately
 
-- Streamlit is primarily designed for data apps and may not be optimized for serverless environments
-- If you need persistent sessions or heavy computation, consider a platform specifically designed for Streamlit like Streamlit Cloud or Heroku
-
-For production deployments with high traffic, consider using a dedicated Streamlit hosting service. 
+This is complex and not recommended for most use cases. 
