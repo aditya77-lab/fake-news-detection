@@ -1,54 +1,32 @@
-from http.server import BaseHTTPRequestHandler
-import os
-import sys
-
-class handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-        
-        message = """
+def handler(request, response):
+    return {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "text/html"
+        },
+        "body": """
         <!DOCTYPE html>
         <html>
         <head>
             <title>Fake News Detector</title>
-            <meta http-equiv="refresh" content="0;url=https://breifly.streamlit.app/" />
+            <meta http-equiv="refresh" content="0;url=https://share.streamlit.io/" />
             <style>
                 body {
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    font-family: sans-serif;
                     background: #0e1117;
                     color: white;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    margin: 0;
-                    padding: 20px;
                     text-align: center;
+                    padding: 50px;
                 }
                 h1 { color: #ff4b4b; }
-                p { margin: 10px 0; max-width: 600px; }
-                a { color: #4b8bff; text-decoration: none; }
-                a:hover { text-decoration: underline; }
+                a { color: #4b8bff; }
             </style>
         </head>
         <body>
             <h1>Fake News Detector</h1>
-            <p>Redirecting to the Streamlit app...</p>
-            <p>If you are not redirected automatically, <a href="https://breifly.streamlit.app/">click here</a>.</p>
-            <p>Note: This app is better hosted on Streamlit Cloud.</p>
+            <p>Redirecting to Streamlit Cloud...</p>
+            <p>If you are not redirected, <a href="https://share.streamlit.io/">click here</a>.</p>
         </body>
         </html>
         """
-        
-        self.wfile.write(message.encode())
-        return
-
-    def do_POST(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write('{"status": "Please use Streamlit Cloud for this application"}'.encode())
-        return 
+    } 

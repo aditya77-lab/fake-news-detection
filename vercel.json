@@ -1,18 +1,4 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python@3.1.32"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/index.py"
-    }
-  ],
-  "env": {
-    "PYTHONUNBUFFERED": "1"
-  }
+  "cleanUrls": true
 } 
